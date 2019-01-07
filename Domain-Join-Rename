@@ -1,1 +1,4 @@
-Add-Computer -DomainName "domain.com" -NewName NewPCName -Restart
+$PCName = Read-Host "Please Enter PC Name" 
+$DomainName = Read-Host "Please Enter Domain Name"
+
+Add-computer -DomainName "$DomainName" -NewName $PCName -Restart
