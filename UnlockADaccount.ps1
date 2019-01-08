@@ -1,14 +1,22 @@
-# Pull user information 
+# Name: Unlock AD Account
+# Author: Aaron Breeden
+# Purpose: Checks to see if the user account is unlocked and if so unlocks the AD account
 
-$Account = Read-Host -Prompt 'Input Account Name'
+
+# Variable to pull user information 
+
+$account = Read-Host -Prompt 'Input Account Name'
 
 # Check if account is locked out
-$LockedOut = (Get-Aduser $Account -Properties lockedout).LockedOut
+$lockedOut = (Get-Aduser $account -Properties lockedout).LockedOut
 
 # Unlock Account If true 
-If ($LockedOut -eq $True) {
-Unlock-ADAccount -Identity $Account
+If ($lockedOut -eq $True) {
+Unlock-ADAccount -Identity $account
 Write-Host "Account has been unlocked"
 }
+
+# Condition if $lockedOut -eq $False
+
 Else { Write-Host "Acount is not locked" 
 }
