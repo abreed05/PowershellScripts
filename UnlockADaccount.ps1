@@ -2,6 +2,9 @@
 # Author: Aaron Breeden
 # Purpose: Checks to see if the user account is unlocked and if so unlocks the AD account
 
+# Install RSAT Tools if you don't have them already 
+
+Import-module activedirectory
 
 # Variable to pull user information 
 
