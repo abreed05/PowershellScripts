@@ -1,6 +1,7 @@
 # Name: Snapshot
 # Author: Aaron Breeden
-# Purpose: Check if specific snapshot exists and if not create it 
+# Purpose: Check if specific snapshot exists on VMWARE ESXi and if not create it 
+# Requirements: PowerCLI v.11 
 
 # Variables that can be changed
 $snapshot = 'GOLDEN_SNAPSHOT'
