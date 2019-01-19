@@ -22,9 +22,9 @@ $vms = Get-VM
 # Loop through each VM, Check if Snapshot exists and if not create it 
 ForEach ($vm in $vms) {
 $snapshotExists = $null
-$snapshotExists = $vm | Get-Snapshot -Name $snapshot -ea SilentlyContinue
+$snapshotExists = $vm | Get-Snapshot | Where-Object { $_.Name -notlike '*GOLDEN_SNAPSHOT*' -or $_.Name -notlike '*GOLDEN_MASTER*'} -ea SilentlyContinue
 
 # If else statement 
 If ($snapshotExists -eq $null) {$vm | New-Snapshot -Name $snapshot -Description $desc}
-Else {Write-Host "$vm snapshot $snapshot already exists "}
+Else {Write-Host "$vm snapshot already exists "}
 }
