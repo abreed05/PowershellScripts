@@ -32,7 +32,7 @@ Function Reset-IP {( Get-WmiObject -List | Where-Object -FilterScript {$_.Name -
 Function Reset-NetworkAdapter {Disable-NetAdapter -Name Wi-Fi -Confirm:$false
                                Netsh Winsock Reset
                                Enable-NetAdapter -Name Wi-Fi -Confirm:$false }
-
+# Creates a file based on the $filepath variable and adds a line with the current date and time the test was started
 Add-Content -Path $filePath "Starting tests at $date "
 
 # Tests for an APIPA address. If APIPA is confirmed will attempt to release / renew DHCP using the Reset-IP function
