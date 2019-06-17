@@ -5,7 +5,7 @@ Set-ExecutionPolicy unrestricted
 
 $ta = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument '-File C:\scripts\SecondScript.ps1'
 $tt = New-ScheduledTaskTrigger -AtLogOn
-$tp = New-ScheduledTaskPrincipal -UserId "4implus\it"
+$tp = New-ScheduledTaskPrincipal -UserId "Domain\domainadminaccount"
 $ts = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries
 $tn = New-ScheduledTask -Action $ta -Principal $tp -Trigger $tt -Settings $ts
 Register-ScheduledTask T1 -InputObject $tn 
@@ -15,8 +15,8 @@ Register-ScheduledTask T1 -InputObject $tn
 Write-Host "Creating Script to run at next logon"
 $userAccount = read-host "Enter username to be added to local administrators "
 New-Item -Path C:\scripts -Name "SecondScript.ps1" -ItemType "file"
-Add-content -Path C:\scripts\SecondScript.ps1 "Add-LocalGroupMember -Group `"Administrators`" -Member `"4implus\$userAccount`""
-Add-content -Path C:\scripts\SecondScript.ps1 "`nAdd-LocalGroupMember -Group `"Administrators`" -Member `"4implus\it`""
+Add-content -Path C:\scripts\SecondScript.ps1 "Add-LocalGroupMember -Group `"Administrators`" -Member `"domain\$userAccount`""
+Add-content -Path C:\scripts\SecondScript.ps1 "`nAdd-LocalGroupMember -Group `"Administrators`" -Member `"domain\localadministratoraccount`""
 Add-content -Path C:\scripts\SecondScript.ps1 "`nUnregister-ScheduledTask -TaskName T1 -Confirm:$false"
 Add-content -Path C:\scripts\SecondScript.ps1 "Remove-Item -Path `"C:\scripts`" -Force -Recurse"
 
@@ -25,4 +25,4 @@ Add-content -Path C:\scripts\SecondScript.ps1 "Remove-Item -Path `"C:\scripts`" 
 write-host "Renaming computer and joining to domain"
 $pcName = read-host "Enter desired computer name " 
 $creds = Get-Credential
-Add-computer -NewName $pcName -DomainName 4implus.local -Credential $creds -restart
+Add-computer -NewName $pcName -DomainName domain.name -Credential $creds -restart
