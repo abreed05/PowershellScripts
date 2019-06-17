@@ -1,3 +1,8 @@
+# Name: Image_Automation
+# Author: Aaron Breeden
+# Purpose: Automate a chunk of our imaging process. 
+
+
 # Set execution Policy 
 Set-ExecutionPolicy unrestricted 
 
