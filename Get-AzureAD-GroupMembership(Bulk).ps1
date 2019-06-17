@@ -2,20 +2,23 @@
 # Author: Aaron Breeden
 # Purpose: Get a list of members for each group in Azure AD
 
-# Variables 
+#Variables
 $cred = Get-Credential
-$groupID = Get-Content C:\Path\To\Text_File
+$filePath = \\your\path\here
+$groupID = Get-Content $filePath\grouplist.txt
 
-#create an empty array 
+# creates an empty array
 $resultsarray =@()
 
-# connect to azure AD 
+#connect to azure AD
 Connect-AzureAD -Credential $cred
 
-# Foreach loop that loops through each group in groupID and stores the results in resultsarray
+# Foreach loop to loop through each group and pull group membership 
 ForEach ($group in $groupID) {
-$resultsarray += Get-AzureADGroupMember -ObjectId "$group" | select DisplayName,@{Expression={$group};Label="Group Name"}, @{n='Description';e={Get-AzureAdGroup -ObjectID "$group" | select DisplayName}}
+$resultsarray += Get-AzureADGroupMember -ObjectId "$group" | select DisplayName,@{n='Group Name';e={Get-AzureAdGroup -ObjectID "$group" | select -ExpandProperty DisplayName}}
 }
 
-# Pipe results from resultsarray to a csv file 
-$resultsarray | Export-Csv -Path C:\scripts\grouplistresult.csv -NoTypeInformation
+# take resultsaaray and pipe results to a csv file - Place CSV where you want 
+$resultsarray | Export-Csv -Path $filePath\grouplistresult.csv -NoTypeInformation
+
+exit
